@@ -15,17 +15,18 @@ const COLLECTIONS = {
 };
 
 const propertyTypes = [
-  "House",
-  "Townhouse",
-  "Condo",
-  "Duplexe",
-  "Studio",
-  "Villa",
-  "Apartment",
+  "Lagos",
+  "Abuja",
+  "SouthEast",
+  "South",
+  "SouthWest",
+  "NorthCentral",
+  "NorthEast",
+  "NorthWest",
   "Other",
 ];
 
-const facilities = ["Laundry", "Parking", "Gymn", "Wifi", "Pet-friendly"];
+const accessories = ["Laundry", "Parking", "Gymn", "Wifi", "Pet-friendly"];
 
 function getRandomSubset<T>(
   array: T[],
@@ -137,9 +138,9 @@ async function seed() {
       const assignedReviews = getRandomSubset(reviews, 5, 7); // 5 to 7 reviews
       const assignedGalleries = getRandomSubset(galleries, 3, 8); // 3 to 8 galleries
 
-      const selectedFacilities = facilities
+      const selectedFacilities = accessories
         .sort(() => 0.5 - Math.random())
-        .slice(0, Math.floor(Math.random() * facilities.length) + 1);
+        .slice(0, Math.floor(Math.random() * accessories.length) + 1);
 
       const image =
         propertiesImages.length - 1 >= i
@@ -157,11 +158,12 @@ async function seed() {
           type: propertyTypes[Math.floor(Math.random() * propertyTypes.length)],
           description: `This is the description for Property ${i}.`,
           address: `123 Property Street, City ${i}`,
-          geolocation: `192.168.1.${i}, 192.168.1.${i}`,
-          price: Math.floor(Math.random() * 9000) + 1000,
-          area: Math.floor(Math.random() * 3000) + 500,
-          bedrooms: Math.floor(Math.random() * 5) + 1,
-          bathrooms: Math.floor(Math.random() * 5) + 1,
+          geolocationlongitude: `192.168.1.${i}, 192.168.1.${i}`,
+          geolocationlatitude: `192.168.1.${i}, 192.168.1.${i}`,
+          phonenumber: Math.floor(Math.random() * 9000) + 1000,
+          pretige: Math.floor(Math.random() * 5) + 1,
+          explora: Math.floor(Math.random() * 5) + 1,
+          hddecoder: Math.floor(Math.random() * 5) + 1,
           rating: Math.floor(Math.random() * 5) + 1,
           facilities: selectedFacilities,
           image: image,

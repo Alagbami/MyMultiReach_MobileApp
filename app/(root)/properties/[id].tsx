@@ -1,3 +1,4 @@
+import React from "react";
 import {
   FlatList,
   Image,
@@ -7,13 +8,16 @@ import {
   View,
   Dimensions,
   Platform,
+  Alert,
+  Linking,
 } from "react-native";
+import MapView, { Marker } from "react-native-maps";
 import { router, useLocalSearchParams } from "expo-router";
 
 import icons from "@/constants/icons";
 import images from "@/constants/images";
 import Comment from "@/components/Comment";
-import { facilities } from "@/constants/data";
+import { accessories } from "@/constants/data";
 
 import { useAppwrite } from "@/lib/useAppwrite";
 import { getPropertyById } from "@/lib/appwrite";
@@ -29,6 +33,36 @@ const Property = () => {
       id: id!,
     },
   });
+
+  const handleCall = (phoneNumber: string) => {
+    const url = `tel:${phoneNumber}`;
+    Linking.canOpenURL(url)
+      .then((supported) => {
+        if (supported) {
+          Linking.openURL(url);
+        } else {
+          Alert.alert("Error", "Unable to make a call.");
+        }
+      })
+      .catch(() => {
+        Alert.alert("Error", "An unexpected error occurred.");
+      });
+  };
+
+  const handleSMS = (phoneNumber: string) => {
+    const url = `sms:${phoneNumber}`;
+    Linking.canOpenURL(url)
+      .then((supported) => {
+        if (supported) {
+          Linking.openURL(url);
+        } else {
+          Alert.alert("Error", "Unable to send a message.");
+        }
+      })
+      .catch(() => {
+        Alert.alert("Error", "An unexpected error occurred.");
+      });
+  };
 
   return (
     <View>
@@ -61,14 +95,14 @@ const Property = () => {
                 <Image source={icons.backArrow} className="size-5" />
               </TouchableOpacity>
 
-              <View className="flex flex-row items-center gap-3">
+              {/*<View className="flex flex-row items-center gap-3">
                 <Image
                   source={icons.heart}
                   className="size-7"
                   tintColor={"#191D31"}
                 />
                 <Image source={icons.send} className="size-7" />
-              </View>
+              </View>*/}
             </View>
           </View>
         </View>
@@ -98,19 +132,19 @@ const Property = () => {
               <Image source={icons.bed} className="size-4" />
             </View>
             <Text className="text-black-300 text-sm font-rubik-medium ml-2">
-              {property?.bedrooms} Beds
+              {property?.hddecoder} HD Decoder
             </Text>
             <View className="flex flex-row items-center justify-center bg-primary-100 rounded-full size-10 ml-7">
               <Image source={icons.bath} className="size-4" />
             </View>
             <Text className="text-black-300 text-sm font-rubik-medium ml-2">
-              {property?.bathrooms} Baths
+              {property?.explora} Explora Decoder
             </Text>
             <View className="flex flex-row items-center justify-center bg-primary-100 rounded-full size-10 ml-7">
               <Image source={icons.area} className="size-4" />
             </View>
             <Text className="text-black-300 text-sm font-rubik-medium ml-2">
-              {property?.area} sqft
+              {property?.pretige} Pretige Decoder
             </Text>
           </View>
 
@@ -137,8 +171,16 @@ const Property = () => {
               </View>
 
               <View className="flex flex-row items-center gap-3">
-                <Image source={icons.chat} className="size-7" />
-                <Image source={icons.phone} className="size-7" />
+                <TouchableOpacity
+                  onPress={() => handleSMS(property?.phonenumber)}
+                >
+                  <Image source={icons.chat} className="size-7" />
+                </TouchableOpacity>
+                <TouchableOpacity
+                  onPress={() => handleCall(property?.phonenumber)}
+                >
+                  <Image source={icons.phone} className="size-7" />
+                </TouchableOpacity>
               </View>
             </View>
           </View>
@@ -154,14 +196,14 @@ const Property = () => {
 
           <View className="mt-7">
             <Text className="text-black-300 text-xl font-rubik-bold">
-              Facilities
+              Accessories
             </Text>
 
-            {property?.facilities.length > 0 && (
+            {property?.accessories.length > 0 && (
               <View className="flex flex-row flex-wrap items-start justify-start mt-2 gap-5">
-                {property?.facilities.map((item: string, index: number) => {
-                  const facility = facilities.find(
-                    (facility) => facility.title === item
+                {property?.accessories.map((item: string, index: number) => {
+                  const accessory = accessories.find(
+                    (accessory) => accessory.title === item
                   );
 
                   return (
@@ -171,7 +213,7 @@ const Property = () => {
                     >
                       <View className="size-14 bg-primary-100 rounded-full flex items-center justify-center">
                         <Image
-                          source={facility ? facility.icon : icons.info}
+                          source={accessory ? accessory.icon : icons.info}
                           className="size-6"
                         />
                       </View>
@@ -223,10 +265,37 @@ const Property = () => {
               </Text>
             </View>
 
-            <Image
+            {/*<Image
               source={images.map}
               className="h-52 w-full mt-5 rounded-xl"
-            />
+            />*/}
+
+            <View className="h-52 w-full mt-5 rounded-xl overflow-hidden">
+              {property?.geolocationlongitude ? (
+                <MapView
+                  style={{ flex: 1 }}
+                  initialRegion={{
+                    latitude: property?.geolocationlatitude,
+                    longitude: property?.geolocationlongitude,
+                    latitudeDelta: 6,
+                    longitudeDelta: 7,
+                  }}
+                >
+                  <Marker
+                    coordinate={{
+                      latitude: property?.geolocationlatitude,
+                      longitude: property?.geolocationlongitude,
+                    }}
+                    title={property?.name}
+                    description={property?.address}
+                  />
+                </MapView>
+              ) : (
+                <Text className="text-black-200 text-base text-center mt-5">
+                  No geolocation data available.
+                </Text>
+              )}
+            </View>
           </View>
 
           {property?.reviews.length > 0 && (
@@ -258,19 +327,22 @@ const Property = () => {
         <View className="flex flex-row items-center justify-between gap-10">
           <View className="flex flex-col items-start">
             <Text className="text-black-200 text-xs font-rubik-medium">
-              Price
+              phone number
             </Text>
             <Text
               numberOfLines={1}
               className="text-primary-300 text-start text-2xl font-rubik-bold"
             >
-              ${property?.price}
+              {property?.phonenumber}
             </Text>
           </View>
 
-          <TouchableOpacity className="flex-1 flex flex-row items-center justify-center bg-primary-300 py-3 rounded-full shadow-md shadow-zinc-400">
+          <TouchableOpacity
+            onPress={() => handleCall(property?.phonenumber)}
+            className="flex-1 flex flex-row items-center justify-center bg-primary-300 py-3 rounded-full shadow-md shadow-zinc-400"
+          >
             <Text className="text-white text-lg text-center font-rubik-bold">
-              Book Now
+              Contact Now
             </Text>
           </TouchableOpacity>
         </View>

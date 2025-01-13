@@ -1,4 +1,4 @@
-import onboarding from "@/assets/images/onboarding.png";
+//import onboarding from "@/assets/images/onboarding.png";
 import avatar from "@/assets/images/avatar.png";
 import newYork from "@/assets/images/new-york.png";
 import japan from "@/assets/images/japan.png";
@@ -12,7 +12,7 @@ import onboardingTwo from "@/assets/images/onboarding2.png";
 import multichoiceLogo from "@/assets/images/MultiChoice_png_logo.png";
 
 export default {
-  onboarding,
+  //onboarding,
   avatar,
   newYork,
   japan,

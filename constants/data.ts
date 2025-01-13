@@ -5,7 +5,7 @@ export const cards = [
   {
     title: "Card 1",
     location: "Location 1",
-    price: "$100",
+    number: "08094770313",
     rating: 4.8,
     category: "house",
     image: images.newYork,
@@ -13,7 +13,7 @@ export const cards = [
   {
     title: "Card 2",
     location: "Location 2",
-    price: "$200",
+    number: "08059794554",
     rating: 3,
     category: "house",
     image: images.japan,
@@ -21,7 +21,7 @@ export const cards = [
   {
     title: "Card 3",
     location: "Location 3",
-    price: "$300",
+    number: "08059794554",
     rating: 2,
     category: "flat",
     image: images.newYork,
@@ -29,7 +29,7 @@ export const cards = [
   {
     title: "Card 4",
     location: "Location 4",
-    price: "$400",
+    number: "08059794554",
     rating: 5,
     category: "villa",
     image: images.japan,
@@ -40,7 +40,7 @@ export const featuredCards = [
   {
     title: "Featured 1",
     location: "Location 1",
-    price: "$100",
+    number: "08059794554",
     rating: 4.8,
     image: images.newYork,
     category: "house",
@@ -48,7 +48,7 @@ export const featuredCards = [
   {
     title: "Featured 2",
     location: "Location 2",
-    price: "$200",
+    number: "08059794554",
     rating: 3,
     image: images.japan,
     category: "flat",
@@ -57,13 +57,14 @@ export const featuredCards = [
 
 export const categories = [
   { title: "All", category: "All" },
-  { title: "Houses", category: "House" },
-  { title: "Condos", category: "Condo" },
-  { title: "Duplexes", category: "Duplexe" },
-  { title: "Studios", category: "Studio" },
-  { title: "Villas", category: "Villa" },
-  { title: "Apartments", category: "Apartment" },
-  { title: "Townhomes", category: "Townhouse" },
+  { title: "Lagos", category: "Lagos" },
+  { title: "Abuja", category: "Abuja" },
+  { title: "SouthEast", category: "SouthEast" },
+  { title: "South", category: "South" },
+  { title: "SouthWest", category: "SouthWest" },
+  { title: "NorthCentral", category: "NorthCentral" },
+  { title: "NorthEast", category: "NorthEast" },
+  { title: "NorthWest", category: "NorthWest" },
   { title: "Others", category: "Other" },
 ];
 
@@ -102,29 +103,29 @@ export const settings = [
   },
 ];
 
-export const facilities = [
+export const accessories = [
   {
-    title: "Laundry",
+    title: "Dish",
     icon: icons.laundry,
   },
   {
-    title: "Car Parking",
+    title: "Antenna",
     icon: icons.carPark,
   },
   {
-    title: "Sports Center",
+    title: "Smart-LNB",
     icon: icons.run,
   },
   {
-    title: "Cutlery",
+    title: "Cable",
     icon: icons.cutlery,
   },
   {
-    title: "Gym",
+    title: "Remotes",
     icon: icons.dumbell,
   },
   {
-    title: "Swimming pool",
+    title: "Adaptor",
     icon: icons.swim,
   },
   {
@@ -132,7 +133,7 @@ export const facilities = [
     icon: icons.wifi,
   },
   {
-    title: "Pet Center",
+    title: "Coaxial-Cable",
     icon: icons.dog,
   },
 ];
